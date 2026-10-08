@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.*;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contrat")
@@ -25,4 +27,10 @@ public class Contrat {
 
     @Column(nullable = false)
     private Boolean valide;
+
+    @OneToMany(mappedBy = "contrat", fetch = FetchType.EAGER)
+    private List<Paiement> paiements = new ArrayList<>();
+
+    @OneToOne(mappedBy = "contrat")
+    private Reservation reservation;
 }

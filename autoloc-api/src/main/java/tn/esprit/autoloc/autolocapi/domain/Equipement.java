@@ -2,8 +2,8 @@ package tn.esprit.autoloc.autolocapi.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.*;
-import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "equipement")
@@ -19,4 +19,7 @@ public class Equipement {
 
     @Column(nullable = false, unique = true, length = 100)
     private String libelle;
+
+    @ManyToMany(mappedBy = "equipements")
+    private List<Vehicule> vehicules = new ArrayList<>();
 }

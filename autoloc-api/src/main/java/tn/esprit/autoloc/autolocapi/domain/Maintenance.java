@@ -24,4 +24,8 @@ public class Maintenance {
 
     @Column(length = 255)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
 }

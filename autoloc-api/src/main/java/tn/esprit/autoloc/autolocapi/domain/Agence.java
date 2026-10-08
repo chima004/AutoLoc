@@ -2,8 +2,8 @@ package tn.esprit.autoloc.autolocapi.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.*;
-import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "agence")
@@ -28,4 +28,10 @@ public class Agence {
 
     @Column(length = 20)
     private String telephone;
+
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Vehicule> vehicules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agence")
+    private List<Employe> employes = new ArrayList<>();
 }
