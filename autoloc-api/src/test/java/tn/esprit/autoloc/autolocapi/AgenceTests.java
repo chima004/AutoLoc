@@ -13,12 +13,14 @@ import tn.esprit.autoloc.autolocapi.domain.CategorieVehicule;
 import tn.esprit.autoloc.autolocapi.domain.StatutVehicule;
 import tn.esprit.autoloc.autolocapi.domain.Vehicule;
 import tn.esprit.autoloc.autolocapi.repository.IAgenceRepository;
+import tn.esprit.autoloc.autolocapi.service.IAgenceService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -31,6 +33,9 @@ class AgenceTests {
     // Étape 3 : nouvel attribut
     @Autowired
     IAgenceRepository fullAgenceRepository;
+
+    @Autowired
+    IAgenceService agenceService;
 
     // Étapes 4, 5, 6 : paramètre repository, suffixe, méthode privée sans @Test
     private void addAgence(CrudRepository<Agence, Long> repository) {
@@ -169,6 +174,21 @@ class AgenceTests {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    void createAgence() {
+        Agence agence = new Agence();
+        agence.setNom("Agence Service");
+        agence.setVille("Sousse");
+        agence.setAdresse("Boulevard 14 Janvier");
+
+        Agence created = agenceService.create(agence);
+
+        assertNotNull(created.getIdAgence());
+        assertEquals("Agence Service", created.getNom());
+        assertEquals("Sousse", created.getVille());
+        assertEquals("Boulevard 14 Janvier", created.getAdresse());
     }
 }
 
