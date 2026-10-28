@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.*;
@@ -29,8 +30,10 @@ public class Contrat {
     private Boolean valide;
 
     @OneToMany(mappedBy = "contrat", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("contrat")
     private List<Paiement> paiements = new ArrayList<>();
 
     @OneToOne(mappedBy = "contrat")
+    @JsonIgnoreProperties({"contrat", "vehicule", "client"})
     private Reservation reservation;
 }

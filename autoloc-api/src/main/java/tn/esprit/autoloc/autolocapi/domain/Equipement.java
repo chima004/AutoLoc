@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -21,5 +22,6 @@ public class Equipement {
     private String libelle;
 
     @ManyToMany(mappedBy = "equipements")
+    @JsonIgnoreProperties({"equipements", "agence", "reservations", "maintenances"})
     private List<Vehicule> vehicules = new ArrayList<>();
 }

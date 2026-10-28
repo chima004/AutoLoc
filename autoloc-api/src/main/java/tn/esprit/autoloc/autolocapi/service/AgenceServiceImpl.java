@@ -2,9 +2,13 @@ package tn.esprit.autoloc.autolocapi.service;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.Utils;
 import tn.esprit.autoloc.autolocapi.domain.Agence;
+import tn.esprit.autoloc.autolocapi.domain.Vehicule;
 import tn.esprit.autoloc.autolocapi.repository.IAgenceRepository;
+
+import java.util.ArrayList;
 
 @Service
 @Primary
@@ -49,5 +53,18 @@ public class AgenceServiceImpl extends GenericServiceImpl<Agence, Long> implemen
     public boolean hasVehicules(Long id) {
         Agence agence = findById(id);
         return agence.getVehicules() != null && !agence.getVehicules().isEmpty();
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        Agence agence = findById(id);
+        if (agence.getVehicules() != null) {
+            for (Vehicule vehicule : new ArrayList<>(agence.getVehicules())) {
+                vehicule.setAgence(null);
+            }
+            agence.getVehicules().clear();
+        }
+        repository.delete(agence);
     }
 }
